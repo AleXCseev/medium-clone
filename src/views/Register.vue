@@ -7,9 +7,9 @@
                         Sign Up
                     </h1>
                     <p class="text-xs-center">
-                        <!-- <router-link :to="{name: 'login'}">Need an account?</router-link> -->
+                        <!-- <router-link :to="{name: 'login'}">Nave an account?</router-link> -->
                     </p>
-                    VALIDATION ERRORS
+                    <app-validation-errors v-if="validationErrors" :validation-errors="validationErrors"/>
                     <form @submit.prevent="onSubmit">
                         <div class="form-group">
                             <input type="text" class="form-control form-control-lg" placeholder="Username" v-model="username">
@@ -29,8 +29,12 @@
 </template>
 
 <script>
+import AppValidationErrors from '@/components/ValidationErrors.vue';
 export default {
     name: "AppRegister",
+    components: {
+        AppValidationErrors
+    },
     data () {
         return {
             email: "",
@@ -41,11 +45,13 @@ export default {
     computed: {
         isSubmitting() {
             return this.$store.state.auth.isSubmitting
+        },
+        validationErrors() {
+            return this.$store.state.auth.validationErrors
         }
     },
     methods: {
         onSubmit() {
-            console.log("Submit");
             this.$store.dispatch("register", {
                     email: this.email, 
                     username: this.username, 
