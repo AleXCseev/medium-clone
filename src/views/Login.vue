@@ -4,23 +4,20 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3 col-xs-12">
                     <h1 class="text-xs-center">
-                        Sign Up
+                        Sign In
                     </h1>
                     <p class="text-xs-center">
-                        <!-- <router-link :to="{name: 'login'}">Nave an account?</router-link> -->
+                        <!-- <router-link :to="{name: 'register'}">Need an account?</router-link> -->
                     </p>
                     <app-validation-errors v-if="validationErrors" :validation-errors="validationErrors"/>
                     <form @submit.prevent="onSubmit">
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Username" v-model="username">
-                        </div>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-lg" placeholder="Email" v-model="email">
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" v-model="password">
                         </div>
-                        <button class="btn btn-lg btn-primary pull-xs-right" :disabled="isSubmitting">Sign Up</button>
+                        <button class="btn btn-lg btn-primary pull-xs-right" :disabled="isSubmitting">Sign In</button>
                     </form>
                 </div>
             </div>
@@ -34,7 +31,7 @@ import AppValidationErrors from '@/components/ValidationErrors.vue';
 import { actionTypes } from '@/store/modules/auth';
 
 export default {
-    name: "AppRegister",
+    name: "AppLogin",
     components: {
         AppValidationErrors
     },
@@ -42,20 +39,18 @@ export default {
         return {
             email: "",
             password: "",
-            username: "",
         }
     },
     computed: {
-       ...mapState({
+        ...mapState({
             isSubmitting: state => state.auth.isSubmitting,
             validationErrors: state => state.auth.validationErrors
         })
     },
     methods: {
         onSubmit() {
-            this.$store.dispatch(actionTypes.register, {
+            this.$store.dispatch(actionTypes.login, {
                     email: this.email, 
-                    username: this.username, 
                     password: this.password
                 })
                 .then(() => this.$router.push({name: "home"}))
