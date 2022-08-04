@@ -53,7 +53,7 @@ export default {
                     email: this.email, 
                     password: this.password
                 })
-                .then(() => this.$router.push({name: "home"}))
+                .then(() => this.$router.push({name: "globalfeed"}))
                 // .catch(error => console.log(error))
         }
     }
