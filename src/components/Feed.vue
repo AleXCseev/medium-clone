@@ -16,7 +16,11 @@
                         <span class="date">{{ article.createdAt }}</span>
                     </div>
                     <div class="pull-xs-right">
-                        ADD TO FAVORITES
+                        <app-add-to-favorites 
+                            :is-favorited="article.favorited" 
+                            :article-slug="article.slug" 
+                            :favorites-count="article.favoritesCount"
+                        />
                     </div>
                 </div>
                 <router-link :to="{name: 'article', params: {slug: article.slug}}" class="preview-link">
@@ -38,6 +42,7 @@ import AppPagination from "@/components/Pagination.vue"
 import AppLoading from "@/components/Loading.vue"
 import AppErrorMessage from "@/components/ErrorMessage.vue"
 import AppTagList from "@/components/TagList.vue"
+import AppAddToFavorites from "@/components/AddToFavorites.vue"
 import { limit } from "@/helpers/vars"
 import { stringify, parseUrl } from "query-string"
 
@@ -54,6 +59,7 @@ export default {
         AppLoading,
         AppErrorMessage,
         AppTagList,
+        AppAddToFavorites,
     },
     data() {
         return {
@@ -62,6 +68,9 @@ export default {
     },  
     watch: {
         currentPage() {
+            this.fetchFeed()
+        },
+        apiUrl() {
             this.fetchFeed()
         }
     },
